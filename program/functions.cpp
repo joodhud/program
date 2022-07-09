@@ -1,5 +1,6 @@
 #include "functions.h"
 
+
 struct edible
 {
 	string name;
@@ -43,13 +44,9 @@ void readFile(string path, string& fileusername, string& filepassword, string us
 
 void Show(vector <edible> &v)
 {
-	const int size = 56;
-	cout << "#" << setw(25) << "Name" << setw(25) << "Kkal\n";
-	cout << "----------------------------------------------------" << endl;
-	for (int i = 0; i < size; i++)
+	for (int i = 0; i < v.size(); i++)
 	{
-		cout << i + 1 << setw(25) << v[i].name;
-		cout << setw(25) << v[i].kkal << "\n";
+		cout << i + 1 << '.' << v[i].name << ' ' << v[i].kkal << " kkal" << endl;
 	}
 }
 
@@ -57,15 +54,16 @@ void readDishes(string path, vector<edible> &v)
 {
 	edible dish;
 	ifstream f; string stringkal;
-	const int size = 56;
+
+	v.reserve(56);
 	f.open(path);
 	if (f.is_open())
 	{
-		for (int i = 0; i < size; i++)
+		for (int i = 0; i < v.capacity(); i++)
 		{
 			v.push_back(dish);
-			f >> v[i].name;
-			f >> stringkal; v[i].kkal = stof(stringkal);
+			getline(f, v[i].name, ':');
+			getline(f, stringkal, ';'); v[i].kkal = stof(stringkal);
 		}
 	}
 	else
@@ -109,14 +107,26 @@ void kall(vector<edible> v, float& kal)
 {
 	Show(v);
 	int userchoice;
+	cout << "Enter number of products that u have eatten today" << endl << "0.Ready" << endl;
 	while (1 == 1)
 	{
-		cout << "Enter number of products that u have eatten today" << endl << "0.Exit" << endl; cin >> userchoice;
+		cin >> userchoice;
 		if (userchoice > 0)
-			kal = v[userchoice - 1].kkal;
+			kal += v[userchoice - 1].kkal;
 		else if (userchoice <= 0)
 			break;
 
 	} 
-	cout << "You have eatten " << kal << " today" << endl;
+	cout << "You have eatten " << kal << " kkal today" << endl;
+}
+
+int main()
+{
+	float kal = 0;
+	string path = "components.txt";
+	vector <edible> v;
+	readDishes(path, v);
+	Show(v);
+	kall(v, kal);
+
 }
