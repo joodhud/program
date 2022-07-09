@@ -55,7 +55,7 @@ void readDishes(string path, vector<edible> &v)
 	edible dish;
 	ifstream f; string stringkal;
 
-	v.reserve(56);
+	v.reserve(85);
 	f.open(path);
 	if (f.is_open())
 	{
@@ -118,15 +118,4 @@ void kall(vector<edible> v, float& kal)
 
 	} 
 	cout << "You have eatten " << kal << " kkal today" << endl;
-}
-
-int main()
-{
-	float kal = 0;
-	string path = "components.txt";
-	vector <edible> v;
-	readDishes(path, v);
-	Show(v);
-	kall(v, kal);
-
 }
