@@ -105,3 +105,18 @@ void BMI(float height, float weight)
 	cout << "You'r BMI is:" << index << endl;
 }
 
+void kall(vector<edible> v, float& kal)
+{
+	Show(v);
+	int userchoice;
+	while (1 == 1)
+	{
+		cout << "Enter number of products that u have eatten today" << endl << "0.Exit" << endl; cin >> userchoice;
+		if (userchoice > 0)
+			kal = v[userchoice - 1].kkal;
+		else if (userchoice <= 0)
+			break;
+
+	} 
+	cout << "You have eatten " << kal << " today" << endl;
+}
